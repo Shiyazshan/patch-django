@@ -1,5 +1,11 @@
-from django.shortcuts import render
-from web.models import Testimonial,Promoter,Faq
+import json
+
+from django.urls import reverse
+from django.shortcuts import render,redirect
+from django.http.response import HttpResponse
+
+from web.models import Subscribe, Testimonial,Promoter,Faq
+
 
 
 def index(request):
@@ -19,3 +25,17 @@ def index(request):
         "existing_deposit_faqs" : existing_deposit_faqs,
     }
     return render(request, "index.html",context=context)
+
+
+def subscribe(request):
+    email = request.POST.get("email")
+    Subscribe.objects.create(
+        email = email
+    )
+
+    response_data = {
+        "status" :"success",
+        "message" : "You subscribed to our newsletter successfully",
+        "title" : "Successfully Registered"
+    }
+    return HttpResponse(json.dumps(response_data),content_type="application/javascript")

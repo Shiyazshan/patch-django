@@ -10,6 +10,7 @@ FAQ_TYPE = (
 class Testimonial(models.Model): 
     name = models.CharField(max_length=255) 
     designation = models.CharField(max_length=255)
+    image = models.ImageField(upload_to="testimonials/",default="image")
     description = models.TextField()
 
     def __str__(self):
@@ -30,3 +31,10 @@ class Faq(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Subscribe(models.Model):
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.email
